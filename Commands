@@ -1,0 +1,36 @@
+https://github.com/narayanapotnuru-tech/employee-app.git
+
+create a new repository on the command line
+
+echo "# employee-app" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/narayanapotnuru-tech/employee-app.git
+git push -u origin main
+
+
+push an existing repository from the command line
+
+git remote add origin https://github.com/narayanapotnuru-tech/employee-app.git
+git branch -M main
+git push -u origin main
+
+
+http://localhost:8091/cicd
+Welcome to CICD
+
+
+http://localhost:8083/dock
+Welcome to the Docker
+
+docker login -u pgns123
+
+docker login -u pgns123    ->>>> pgns123 is my dockerhub username
+password: docker token     ->>>> token generated in dockerhub account
+docker ps
+docker build -t docker-app .   ->>>>> docker-app is jar file name which is created after dockerfile creation
+docker tag docker-app pgns123/docker-app:1
+docker run -p 8083:8083 pgns123/docker-app:1
+docker push pgns123/docker-app:1
