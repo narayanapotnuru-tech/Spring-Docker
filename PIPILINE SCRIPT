@@ -1,0 +1,38 @@
+pipeline {
+    agent any
+
+    tools {
+        // Install the Maven version configured as "M3" and add it to the path.
+        maven "MAVEN_HOME"
+    }
+
+    stages {
+        stage('Build Maven') {
+            steps {
+                // Get some code from a GitHub repository
+                //git 'https://github.com/jglick/simple-maven-project-with-tests.git'
+                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/narayanapotnuru-tech/employee-app']])
+                // Run Maven on a Unix agent.
+                sh "mvn -Dmaven.test.failure.ignore=true clean package"
+            }
+        }
+        stage('Build Image'){
+            steps{
+            script{
+                sh 'docker build -t pgns123/employee-app .'
+            }
+            }
+        }
+        stage('push the image to docker hub'){
+            steps{
+            script{
+                withCredentials([string(credentialsId: 'c1f39dc3-db11-458b-a0e5-582beb040a25', variable: 'docker_pwd')]) {
+                sh 'echo "$docker_pwd" | docker login --username pgns123 --password-stdin'
+                }
+                sh 'docker push pgns123/employee-app'
+            }
+            }
+        }
+    }
+    
+}
